@@ -1,4 +1,5 @@
 import 'package:chat_app/pages/login_page.dart';
+import 'package:chat_app/themes/chat_app_themes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,6 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Chat App',
+      theme: ChatAppThemes.lightTheme, // Light theme
+      darkTheme: ChatAppThemes.darkTheme, // Dark theme
       home: LoginPage(),
     );
   }
