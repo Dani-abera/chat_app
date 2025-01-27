@@ -1,18 +1,21 @@
-import 'package:chat_app/component/chat_app_button.dart';
-import 'package:chat_app/component/chat_app_textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+import '../component/chat_app_button.dart';
+import '../component/chat_app_textfield.dart';
+
+class RegisterPage extends StatefulWidget {
   final void Function() onTap;
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController conformPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +26,11 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             // logo
             Icon(
-              Icons.message,
+              Icons.app_registration,
               size: 60,
             ),
             Text(
-              "Hey, Welcome Back! 👋",
+              "Join Us Today! 🎉",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 28,
@@ -49,11 +52,17 @@ class _LoginPageState extends State<LoginPage> {
               controller: passwordController,
               isPassword: true,
             ),
+            ChatAppTextField(
+              hintText: 'Conform Password',
+              prefixIcon: Icons.password_sharp,
+              controller: conformPasswordController,
+              isPassword: true,
+            ),
             SizedBox(
               height: 25,
             ),
             ChatAppButton(
-              text: 'LogIn',
+              text: 'Register',
               onPressed: () {},
             ),
             SizedBox(
@@ -63,13 +72,13 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Not a member ! ',
+                  'already a registered ! ',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 GestureDetector(
                   onTap: widget.onTap,
                   child: Text(
-                    'Register Now',
+                    'LogIn Now',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),

@@ -1,4 +1,4 @@
-import 'package:chat_app/pages/login_page.dart';
+import 'package:chat_app/auth/login_or_register.dart';
 import 'package:chat_app/themes/chat_app_themes.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       title: 'Chat App',
       theme: ChatAppThemes.lightTheme, // Light theme
       darkTheme: ChatAppThemes.darkTheme, // Dark theme
-      home: LoginPage(),
+
+      home: LoginOrRegister(),
     );
   }
 }
