@@ -1,5 +1,5 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-
 import '../component/chat_app_button.dart';
 import '../component/chat_app_textfield.dart';
 
@@ -16,6 +16,31 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController conformPasswordController =
       TextEditingController();
+
+  void signup() {
+    final auth = AuthService();
+    if (passwordController.text == conformPasswordController.text) {
+      try {
+        auth.signUpWithEmailAndPassword(
+            emailController.text, passwordController.text);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(
+              "Oops! Your password and confirm password don’t match. Please try again."),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             ChatAppButton(
               text: 'Register',
-              onPressed: () {},
+              onPressed: () => signup(),
             ),
             SizedBox(
               height: 25,

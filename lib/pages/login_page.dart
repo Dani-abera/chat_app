@@ -1,3 +1,4 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:chat_app/component/chat_app_button.dart';
 import 'package:chat_app/component/chat_app_textfield.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,23 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  void logIn() {
+    final authService = AuthService();
+    try {
+      authService.signInWithEmailAndPassword(
+          emailController.text, passwordController.text);
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ChatAppButton(
               text: 'LogIn',
-              onPressed: () {},
+              onPressed: () => logIn(),
             ),
             SizedBox(
               height: 25,
