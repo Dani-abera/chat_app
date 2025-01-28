@@ -65,6 +65,9 @@ class ChatAppDrawer extends StatelessWidget {
               },
             ),
           ),
+          SizedBox(
+            height: 30,
+          )
         ],
       ),
     );

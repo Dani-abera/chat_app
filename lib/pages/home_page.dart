@@ -1,8 +1,12 @@
 import 'package:chat_app/auth/auth_service.dart';
+import 'package:chat_app/service/chat_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../component/chat_app_drawer.dart';
-import '../service/dropdown_icon_button.dart';
+import '../component/user_tile.dart';
+import 'chat_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,8 +16,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final chatService = ChatService();
+  final authService = AuthService();
+
   void logout() {
-    final authService = AuthService();
     try {
       authService.signOut();
     } catch (e) {
@@ -90,13 +96,14 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+  //final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: ChatAppDrawer(),
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text(authService.getCurrentUser()!.email.toString()),
         actions: [
           IconButton(
             key: _menuKey,
@@ -108,6 +115,54 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      body: _buildUsersList(),
     );
+  }
+
+  Widget _buildUsersList() {
+    return StreamBuilder(
+      stream: chatService.getUsersStream(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: Text('Loading....'),
+          );
+        }
+
+        return ListView(
+          children: snapshot.data!
+              .map<Widget>((userData) => _buildUsersListItem(userData, context))
+              .toList(),
+        );
+      },
+    );
+  }
+
+  Widget _buildUsersListItem(
+      Map<String, dynamic> userData, BuildContext context) {
+    if (userData["email"].toString().toLowerCase() !=
+        authService.getCurrentUser()!.email) {
+      return UserTile(
+        text: userData['name'] != null
+            ? userData['name'].toString().toUpperCase()
+            : userData['email'],
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ChatPage(
+                receiversEmail: userData['email'],
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      return Container();
+    }
   }
 }

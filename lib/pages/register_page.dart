@@ -16,13 +16,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController conformPasswordController =
       TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
   void signup() {
     final auth = AuthService();
     if (passwordController.text == conformPasswordController.text) {
       try {
         auth.signUpWithEmailAndPassword(
-            emailController.text, passwordController.text);
+            emailController.text, passwordController.text, nameController.text);
       } catch (e) {
         showDialog(
           context: context,
@@ -44,72 +45,80 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // logo
-            Icon(
-              Icons.app_registration,
-              size: 60,
-            ),
-            Text(
-              "Join Us Today! 🎉",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-
-            ChatAppTextField(
-                hintText: 'Email',
-                prefixIcon: Icons.email,
-                controller: emailController),
-            ChatAppTextField(
-              hintText: 'Password',
-              prefixIcon: Icons.password,
-              controller: passwordController,
-              isPassword: true,
-            ),
-            ChatAppTextField(
-              hintText: 'Conform Password',
-              prefixIcon: Icons.password_sharp,
-              controller: conformPasswordController,
-              isPassword: true,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            ChatAppButton(
-              text: 'Register',
-              onPressed: () => signup(),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Row(
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'already a registered ! ',
-                  style: Theme.of(context).textTheme.bodySmall,
+                // logo
+                Icon(
+                  Icons.app_registration,
+                  size: 60,
                 ),
-                GestureDetector(
-                  onTap: widget.onTap,
-                  child: Text(
-                    'LogIn Now',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                Text(
+                  "Join Us Today! 🎉",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
+                SizedBox(
+                  height: 25,
+                ),
+
+                ChatAppTextField(
+                    hintText: 'Name',
+                    prefixIcon: Icons.person,
+                    controller: nameController),
+                ChatAppTextField(
+                    hintText: 'Email',
+                    prefixIcon: Icons.email,
+                    controller: emailController),
+                ChatAppTextField(
+                  hintText: 'Password',
+                  prefixIcon: Icons.password,
+                  controller: passwordController,
+                  isPassword: true,
+                ),
+                ChatAppTextField(
+                  hintText: 'Conform Password',
+                  prefixIcon: Icons.password_sharp,
+                  controller: conformPasswordController,
+                  isPassword: true,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                ChatAppButton(
+                  text: 'Register',
+                  onPressed: () => signup(),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'already a registered ! ',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: Text(
+                        'LogIn Now',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );
