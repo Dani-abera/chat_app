@@ -1,11 +1,11 @@
 import 'package:chat_app/auth/auth_service.dart';
 import 'package:chat_app/service/chat_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../component/chat_app_drawer.dart';
 import '../component/user_tile.dart';
+import '../themes/theme_provider.dart';
 import 'chat_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -68,13 +68,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         PopupMenuItem(
-          child: IconButton(
-            padding: EdgeInsets.only(left: 60, right: 0),
-            icon: Icon(Icons.light_mode, color: Colors.red),
-            onPressed: () {
-              Navigator.pop(context);
-              print("Delete pressed");
-            },
+          child: Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) => IconButton(
+              padding: EdgeInsets.only(left: 60, right: 0),
+              icon: Icon(
+                themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              onPressed: () => themeProvider.toggleTheme(),
+            ),
           ),
         ),
         PopupMenuItem(
@@ -96,7 +98,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  //final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +156,10 @@ class _HomePageState extends State<HomePage> {
             context,
             MaterialPageRoute(
               builder: (_) => ChatPage(
-                receiversEmail: userData['email'],
+                receiversEmail: userData['name'] != null
+                    ? userData['name'].toString().toUpperCase()
+                    : userData['email'],
+                receiverID: userData['uid'],
               ),
             ),
           );

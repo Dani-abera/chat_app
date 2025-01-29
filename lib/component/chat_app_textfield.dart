@@ -5,6 +5,7 @@ class ChatAppTextField extends StatelessWidget {
   final IconData prefixIcon;
   final bool isPassword;
   final TextEditingController controller;
+  final FocusNode? focusNode;
   final Function(String)? onChanged;
 
   const ChatAppTextField({
@@ -13,6 +14,7 @@ class ChatAppTextField extends StatelessWidget {
     required this.prefixIcon,
     required this.controller,
     this.onChanged,
+    this.focusNode,
     this.isPassword = false,
   });
 
@@ -22,6 +24,7 @@ class ChatAppTextField extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: TextField(
         controller: controller,
+        focusNode: focusNode ?? FocusNode(),
         onChanged: onChanged,
         obscureText: isPassword, // Toggle password visibility
         decoration: InputDecoration(
