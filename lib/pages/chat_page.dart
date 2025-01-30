@@ -111,6 +111,8 @@ class _ChatPageState extends State<ChatPage> {
     return ChatAppMessageContainer(
       isCurrentUser: isCurrentUser,
       data: data,
+      userId: data['senderID'],
+      messageId: doc.id,
     );
   }
 
