@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildUsersList() {
     return StreamBuilder(
-      stream: chatService.getUsersStream(),
+      stream: chatService.getUnblockedUsers(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error');

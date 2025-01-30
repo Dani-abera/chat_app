@@ -108,15 +108,15 @@ class Message {
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .pop(); // Close confirmation dialog
-                _showProcessingDialog(context);
+                // _showProcessingDialog(context);
 
-                // Call the blockUser method from ChatService
                 ChatService().blockUser(userId).then((_) {
-                  Navigator.pop(context); // Close processing dialog
-                  _showResultDialogBlock(context, success: true);
-                }).catchError((error) {
                   Navigator.of(context, rootNavigator: true)
                       .pop(); // Close processing dialog
+                  _showResultDialogBlock(context,
+                      success: true); // No delay needed
+                }).catchError((error) {
+                  Navigator.of(context, rootNavigator: true).pop();
                   _showResultDialogBlock(context, success: false);
                 });
               },
@@ -137,23 +137,24 @@ class Message {
           content: Text("Are you sure you want to report this message?"),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context), // Close dialog
+              onPressed: () => Navigator.of(context, rootNavigator: true)
+                  .pop(), // Close dialog
               child: Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close confirmation dialog
-                _showProcessingDialog(context);
-
-                // Simulate reporting process (e.g., sending to Firestore)
+                Navigator.of(context, rootNavigator: true)
+                    .pop(); // Close confirmation dialog
+                // _showProcessingDialog(context);
 
                 ChatService().reportUser(messageId, userId).then((_) {
                   Navigator.of(context, rootNavigator: true)
                       .pop(); // Close processing dialog
-                  _showResultDialogReport(context, success: true);
+                  _showResultDialogBlock(context,
+                      success: true); // No delay needed
                 }).catchError((error) {
                   Navigator.of(context, rootNavigator: true).pop();
-                  _showResultDialogReport(context, success: false);
+                  _showResultDialogBlock(context, success: false);
                 });
               },
               child: Text("Report", style: TextStyle(color: Colors.red)),
@@ -168,7 +169,8 @@ class Message {
   void _showProcessingDialog(BuildContext context) {
     showDialog(
       context: context,
-      // barrierDismissible: false, // Prevent user from dismissing manually
+      useRootNavigator: true,
+      barrierDismissible: false, // Prevent user from dismissing manually
       builder: (context) {
         return AlertDialog(
           content: Row(
@@ -181,19 +183,13 @@ class Message {
         );
       },
     );
-
-    // Automatically close the dialog after 2 seconds
-    Future.delayed(Duration(seconds: 2), () {
-      if (Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
-    });
   }
 
   // Show success or failure message
   void _showResultDialogBlock(BuildContext context, {required bool success}) {
     showDialog(
       context: context,
+      useRootNavigator: true,
       builder: (context) {
         return AlertDialog(
           title: Text(success ? "User Blocked" : "Block Failed"),
@@ -215,6 +211,7 @@ class Message {
   void _showResultDialogReport(BuildContext context, {required bool success}) {
     showDialog(
       context: context,
+      useRootNavigator: true,
       builder: (context) {
         return AlertDialog(
           title: Text(success ? "Report Submitted" : "Report Failed"),

@@ -1,5 +1,4 @@
 import 'package:chat_app/methodes/message.dart';
-import 'package:chat_app/service/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
