@@ -1,16 +1,68 @@
-# chat_app
+<div align="center">
 
-A new Flutter project.
+# 💬 Flutter Chat App
+
+### Real-time messaging app built with Flutter and Firebase
+
+![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)
+
+</div>
+
+---
+
+## Overview
+
+A real-time chat application built with **Flutter** and **Firebase**, exploring authentication and live messaging. Messages sync instantly across devices through Cloud Firestore.
+
+> A focused learning project demonstrating Firebase integration and real-time data in Flutter.
+
+---
+
+## Features
+
+- 🔐 User authentication with Firebase Auth
+- 💬 Real-time messaging backed by Cloud Firestore
+- 📱 Cross-platform Flutter UI (Android & iOS)
+
+---
+
+## Tech Stack
+
+- **Flutter** & **Dart**
+- **Firebase** — Authentication & Cloud Firestore (real-time sync)
+
+---
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+```bash
+# 1. Clone
+git clone https://github.com/Dani-abera/chat_app.git
+cd chat_app
 
-A few resources to get you started if this is your first Flutter project:
+# 2. Install dependencies
+flutter pub get
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# 3. Add your Firebase config
+#    - Android: android/app/google-services.json
+#    - iOS:     ios/Runner/GoogleService-Info.plist
+#    (enable Authentication and Cloud Firestore in your Firebase project)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# 4. Run
+flutter run
+```
+
+---
+
+## Screenshots
+
+> _Add a screenshot or two of the chat screen here._
+
+---
+
+<div align="center">
+
+Built by **[Daniel Abera Bogale](https://github.com/Dani-abera)**
+
+</div>
